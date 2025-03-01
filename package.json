@@ -13,12 +13,7 @@
 		"check": "biome check .",
 		"typecheck": "tsc --noEmit"
 	},
-	"keywords": [
-		"litts",
-		"service",
-		"Node",
-		"automathize"
-	],
+	"keywords": ["litts", "service", "Node", "automathize"],
 	"author": "miguel-motta",
 	"license": "ISC",
 	"devDependencies": {
