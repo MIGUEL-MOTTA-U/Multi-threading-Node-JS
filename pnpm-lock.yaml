@@ -18,6 +18,9 @@ importers:
       '@biomejs/biome':
         specifier: 1.9.3
         version: 1.9.3
+      '@types/node':
+        specifier: 22.13.8
+        version: 22.13.8
       tsx:
         specifier: 4.19.3
         version: 4.19.3
@@ -247,6 +250,9 @@ packages:
 
   '@fastify/proxy-addr@5.0.0':
     resolution: {integrity: sha512-37qVVA1qZ5sgH7KpHkkC4z9SK6StIsIcOmpjvMPXNb3vx2GQxhZocogVYbr2PbbeLCQxYIPDok307xEvRZOzGA==}
+
+  '@types/node@22.13.8':
+    resolution: {integrity: sha512-G3EfaZS+iOGYWLLRCEAXdWK9my08oHNZ+FHluRiggIYJPOXzhOiDgpVCUHaUvyIC5/fj7C/p637jdzC666AOKQ==}
 
   abstract-logging@2.0.1:
     resolution: {integrity: sha512-2BjRTZxTPvheOvGbBslFSYOUkr+SjPtOnrLP33f+VIWLzezQpZcqVg7ja3L4dBXmzzgwT+a029jRx5PCi3JuiA==}
@@ -526,6 +532,9 @@ packages:
   undefsafe@2.0.5:
     resolution: {integrity: sha512-WxONCrssBM8TSPRqN5EmsjVrsv4A8X12J4ArBiiayv3DyyG3ZlIg6yysuuSYdZsVz3TKcTg2fd//Ujd4CHV1iA==}
 
+  undici-types@6.20.0:
+    resolution: {integrity: sha512-Ny6QZ2Nju20vw1SRHe3d9jVu6gJ+4e3+MMpqu7pqE5HT6WsTSlce++GQmK5UXS8mzV8DSYHrQH+Xrf2jVcuKNg==}
+
 snapshots:
 
   '@biomejs/biome@1.9.3':
@@ -660,6 +669,10 @@ snapshots:
     dependencies:
       '@fastify/forwarded': 3.0.0
       ipaddr.js: 2.2.0
+
+  '@types/node@22.13.8':
+    dependencies:
+      undici-types: 6.20.0
 
   abstract-logging@2.0.1: {}
 
@@ -960,3 +973,5 @@ snapshots:
   typescript@5.8.2: {}
 
   undefsafe@2.0.5: {}
+
+  undici-types@6.20.0: {}
