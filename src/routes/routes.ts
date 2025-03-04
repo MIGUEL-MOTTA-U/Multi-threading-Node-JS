@@ -3,9 +3,22 @@ import { fileURLToPath } from "node:url";
 import type { FastifyInstance } from "fastify";
 import bye from "./bye.js";
 import hello from "./hello.js";
+import type Piscina from "piscina";
+const dirWorkers = dirname(fileURLToPath(import.meta.url));
+
+async function createBlackList(nThreads:number, nIPs:number, piscina: Piscina.Piscina): Promise<string[]> {
+	console.log("Creating black list");
+	const something = piscina.run( {nThreads, nIPs} , { filename: resolve(dirWorkers, "../workers/worker3") })
+	.then((result) => {
+		return result;
+	})
+	.catch((error) => {
+		return error;
+	});
+	return something;
+}
 
 async function routes(fastify: FastifyInstance) {
-	const dirWorkers = dirname(fileURLToPath(import.meta.url));
 	fastify.get("/", async (_request, reply) => {
 		reply.send({ hello: "world" });
 	});
@@ -38,6 +51,24 @@ async function routes(fastify: FastifyInstance) {
 
 		const results = await Promise.all(tasks);
 		return { success: true, results };
+	});
+
+	/**
+	 * This route is to test the black list with threads
+	 */
+	fastify.get("/black-list", async (request, _reply) => {
+		const ioT = request.query as { nThreads: number; nIPs: number };
+		const nThreads = ioT.nThreads as number;
+		
+		
+		const nIPs = ioT.nIPs as number;
+		console.log(`Number of threads: ${nThreads}`);
+		console.log(`Number of IPs: ${nIPs}`);
+		const blackList = await createBlackList(nThreads, nIPs, fastify.piscina).then((result) => {
+			return result;
+		});
+
+		return { success: true , result: blackList };
 	});
 }
 export default routes;
