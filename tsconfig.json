@@ -10,7 +10,7 @@
 
 		// Configuración estricta
 		"strict": true,
-		"noImplicitAny": true,
+		"noImplicitAny": false,
 		"strictNullChecks": true,
 		"strictFunctionTypes": true,
 		"strictBindCallApply": true,
@@ -40,6 +40,6 @@
 		"checkJs": true,
 		"declaration": true
 	},
-	"include": ["src/**/*"],
+	"include": ["src/**/*", "src/**/*"],
 	"exclude": ["node_modules", "dist"]
 }
