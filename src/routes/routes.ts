@@ -1,32 +1,17 @@
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { FastifyInstance } from "fastify";
+import createBlackList from "../workers/worker3.js";
 import bye from "./bye.js";
 import hello from "./hello.js";
-import type Piscina from "piscina";
 const dirWorkers = dirname(fileURLToPath(import.meta.url));
-
-async function createBlackList(nThreads:number, nIPs:number, piscina: Piscina.Piscina): Promise<string[]> {
-	console.log("Creating black list");
-	const something = piscina.run( {nThreads, nIPs} , { filename: resolve(dirWorkers, "../workers/worker3") })
-	.then((result) => {
-		return result;
-	})
-	.catch((error) => {
-		return error;
-	});
-	return something;
-}
 
 async function routes(fastify: FastifyInstance) {
 	fastify.get("/", async (_request, reply) => {
 		reply.send({ hello: "world" });
 	});
-
 	fastify.get("/hello", hello);
-
 	fastify.get("/bye", bye);
-
 	fastify.get("/threads-1", async (_request, _reply) => {
 		const worker = resolve(dirWorkers, "../workers/worker");
 		const tasks: Promise<number>[] = [];
@@ -35,9 +20,6 @@ async function routes(fastify: FastifyInstance) {
 				.run({ number: 15, name: `${i}` }, { filename: worker })
 				.then((calculus) => {
 					return calculus.result;
-				})
-				.catch((error) => {
-					return error;
 				});
 			tasks.push(task);
 		}
@@ -56,19 +38,25 @@ async function routes(fastify: FastifyInstance) {
 	/**
 	 * This route is to test the black list with threads
 	 */
-	fastify.get("/black-list", async (request, _reply) => {
+	fastify.get("/black-list", async (request, reply) => {
 		const ioT = request.query as { nThreads: number; nIPs: number };
 		const nThreads = ioT.nThreads as number;
-		
-		
 		const nIPs = ioT.nIPs as number;
 		console.log(`Number of threads: ${nThreads}`);
 		console.log(`Number of IPs: ${nIPs}`);
-		const blackList = await createBlackList(nThreads, nIPs, fastify.piscina).then((result) => {
-			return result;
-		});
+		const blackList = await createBlackList(nThreads, nIPs, fastify.piscina)
+			// Promise control
+			.then((result: string[]) => {
+				return { succes: true, result };
+			})
+			// Promise error control
+			.catch((error: Error) => {
+				console.log("\nError in black list");
+				console.error(error);
+				return reply.status(400).send(error.message);
+			});
 
-		return { success: true , result: blackList };
+		return reply.status(200).send(blackList);
 	});
 }
 export default routes;

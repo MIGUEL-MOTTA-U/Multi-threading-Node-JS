@@ -40,6 +40,6 @@
 		"checkJs": true,
 		"declaration": true
 	},
-	"include": ["src/**/*", "src/**/*"],
+	"include": ["src/*", "src/**/*"],
 	"exclude": ["node_modules", "dist"]
 }

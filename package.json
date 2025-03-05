@@ -2,7 +2,7 @@
 	"name": "multi-threading-node-js",
 	"version": "1.0.0",
 	"type": "module",
-	"description": "This is a simple example of how to use multi-threading in Node.js with Fastify",
+	"description": "This is a simple example of how to use multi-threading in Node.js with Fastify. This project is not suposed to be used in production it's just a project to practice and learn more about the utilities of threads with Node JS.",
 	"main": "./src/server.ts",
 	"scripts": {
 		"dev": "nodemon -w src -e ts,json --exec tsx src/server.ts",
